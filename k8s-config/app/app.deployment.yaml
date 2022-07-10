@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-k8s
+  labels:
+    component: app-k8s
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  strategy: # change here
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      component: app-k8s
+  template:
+    metadata:
+      labels:
+        component: app-k8s
+    spec:
+      containers:
+        - name: app-k8s
+          image: hustchihieu/k8s_app:testing
+          # envFrom:
+          #   - configMapRef:
+          #       name: microservice-cm
