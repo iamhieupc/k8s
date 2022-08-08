@@ -8,7 +8,7 @@ spec:
   revisionHistoryLimit: 3
   replicas: 1
   strategy: # change here
-    type: RollingUpdate
+    type: Recreate
   selector:
     matchLabels:
       component: app-k8s
@@ -23,4 +23,3 @@ spec:
           # envFrom:
           #   - configMapRef:
           #       name: microservice-cm
-
