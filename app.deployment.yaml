@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-app
+  name: nodeapp-deployment
   labels:
-    app: k8s-app
+    app: nodeapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: k8s-app
+      app: nodeapp
   template:
     metadata:
       labels:
-        app: k8s-app 
+        app: nodeapp 
     spec:
       containers:
-      - name: k8s-app
+      - name: nodeserver
         image: hustchihieu/k8s_app:testing
         ports:
         - containerPort: 3000
@@ -26,13 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-app
+  name: nodeapp-service
 spec:
   selector:
-    app: k8s-app 
+    app: nodeapp 
   type: LoadBalancer
   ports:
   - protocol: TCP
     port: 5000
     targetPort: 3000
-    nodePort: 31111
+    nodePort: 31110
