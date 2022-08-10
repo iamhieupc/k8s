@@ -46,6 +46,7 @@ pipeline {
 
     stage('run docker file') {
       steps {
+        sh 'docker pull hustchihieu/k8s_app:testing'
         sh 'docker stop k8s_app'
         sh 'docker rm k8s_app'
         sh 'docker rmi hustchihieu/k8s_app:testing'
