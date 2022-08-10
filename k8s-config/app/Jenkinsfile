@@ -44,6 +44,13 @@ pipeline {
       }
     }
 
+    stage('run docker file') {
+      steps {
+        sh 'docker pull hustchihieu/k8s_app:testing'
+        sh 'docker run -d --name k8s_app -p 3002:3000 hustchihieu/k8s_app:testing'
+      }
+    }
+
   }
 
 }
