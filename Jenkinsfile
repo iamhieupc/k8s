@@ -11,7 +11,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/hustchihieu143/k8s', branch: 'master'
+        git 'https://github.com/hustchihieu143/k8s'
       }
     }
 
