@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-k8s
+  labels:
+    component: customer-k8s
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  strategy: # change here
+    type: Recreate
+  selector:
+    matchLabels:
+      component: customer-k8s
+  template:
+    metadata:
+      labels:
+        component: customer-k8s
+    spec:
+      containers:
+        - name: customer-k8s
+          image: hustchihieu/customer_app:lts
+          # envFrom:
+          #   - configMapRef:
+          #       name: microservice-cm
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-k8s
+  labels: 
+    component: customer-k8s
+spec:
+  selector:
+    component: customer-k8s
+  type: NodePort  
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 31083
