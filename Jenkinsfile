@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    dockerimagename = "hustchihieu/k8s_app:testing"
+    dockerimagename = "hustchihieu/customer_app:lts"
     dockerImage = ""
   }
 
@@ -39,22 +39,10 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "app.deployment.yml", kubeconfigId: "kubernetes")
+          kubernetesDeploy(configs: "./k8s-config/customer/customer.deployment.yml", kubeconfigId: "kubernetes")
         }
       }
     }
-
-    stage('run docker file') {
-      steps {
-        sh 'docker pull hustchihieu/k8s_app:testing'
-        sh 'docker stop k8s_app'
-        sh 'docker rm k8s_app'
-        sh 'docker rmi hustchihieu/k8s_app:testing'
-        sh 'docker pull hustchihieu/k8s_app:testing'
-        sh 'docker run -d --name k8s_app -p 3002:3000 hustchihieu/k8s_app:testing'
-      }
-    }
-
   }
 
 }
