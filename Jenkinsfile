@@ -19,6 +19,7 @@ pipeline {
       steps{
         script {
           dockerImage = docker.build dockerimagename
+          docker.build("hustchihieu/customer_app:lts", "-f server/Dockerfile server")
         }
       }
     }
@@ -30,7 +31,9 @@ pipeline {
       steps{
         script {
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("testing")
+            dockerImage.push("lts")
+            sh 'docker tag hustchihieu/customer_app:lts hustchihieu/customer_app:lts'
+            sh 'echo "chihieu123" | docker login -u hustchihieu --password-stdin'
           }
         }
       }
@@ -39,7 +42,8 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "./k8s-config/customer/customer.deployment.yml", kubeconfigId: "kubernetes")
+          sh 'kubectl get pod'
+          kubernetesDeploy(configs: "k8s-config/customer/customer.deployment.yaml", kubeconfigId: "myconfigk8s")
         }
       }
     }
