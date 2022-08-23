@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: customer-k8s
-          image: hustchihieu/test_k8s:latest
+          image: hustchihieu/test_k8s:$BUILD_NUMBER
           # envFrom:
           #   - configMapRef:
           #       name: microservice-cm
