@@ -8,7 +8,7 @@ spec:
   revisionHistoryLimit: 3
   replicas: 1
   strategy: # change here
-    type: Recreate
+    type: RollingUpdate
   selector:
     matchLabels:
       component: customer-k8s
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: customer-k8s
-          image: hustchihieu/customer_app:lts
+          image: hustchihieu/test_k8s:latest
           # envFrom:
           #   - configMapRef:
           #       name: microservice-cm
